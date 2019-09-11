@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <strong>Chào, <%=fullname%> - <%=email%></strong>
+   <div class="row">
+        <div class="col-md-4">
+                <ul class="list-group">
+                    <%listUsers && listUsers.length > 0 && listUsers.forEach(user => {%>
+                        <li class="list-group-item">
+                            <%=user.fullname%> - <%=user.email%> - 
+                                <%let listUsersRequest = usersRequest.join('_');%>
+                                <%if(listUsersRequest.includes(user._id.toString())){%>
+                                    <a href="/user/request-remove-friend/<%=user._id%>">
+                                        <button class="btn btn-danger">Hoàn Tác</button>
+                                    </a>
+            
+                                <%}else{%>
+                                    <a href="/user/request-add-friend/<%=user._id%>">
+                                        <button class="btn btn-primary">Gửi Kết Bạn</button>
+                                    </a>
+            
+                                <%}%>
+                        </li>
+                    <%})%>
+                </ul>
+        </div>
+        <div class="col-md-4">
+            <strong>Yêu Cầu Kết Bạn</strong>
+            
+            <ul class="list-group">
+                <%guestsRequest && guestsRequest.length > 0 && guestsRequest.forEach(user => {%>
+                    <li class="list-group-item">
+                        <%=user.fullname%> - <%=user.email%> - 
+                        <a href="/user/resolve-friend/<%=user._id%>">
+                            <button class="btn btn-primary">Chấp Nhận</button>
+                        </a>
+                        <a href="/user/reject-friend/<%=user._id%>">
+                            <button class="btn btn-danger">Huỷ</button>
+                        </a>
+                    </li>
+                <%})%>
+            </ul>
+        </div>
+        <div class="col-md-4"></div>
+   </div>
+</div>
+
+</body>
+</html>
